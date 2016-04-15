@@ -53,12 +53,57 @@ var server = http.createServer(function(request,response){
                     //我们将XML数据通过xml2js模块（npm install xml2js）解析成json格式
                     console.log(result.xml.ToUserName[0]);
                     console.log(result.xml.MsgType[0]);
-                    response.end('success');
+                    var xmlResponse = getResponseXml(result.xml);
+                    response.end(xmlResponse);
                 }
             });
         });
     }
 });
+
+function getResponseXml(xml) {
+    var msgType=xml['MsgType'][0];
+    var to_username = xml['ToUserName'][0];
+    var from_username = xml['FromUserName'][0];
+    var responseXml = {xml: {}}
+    responseXml['xml']['ToUserName'] = from_username;
+    responseXml['xml']['FromUserName'] = to_username;
+    if (msgType === "event") {
+        var event = xml['Event'][0];
+        if (event = "subscribe") {
+            responseXml['xml']['CreateTime'] = new Date().getTime();
+            responseXml['xml']['MsgType'] = "text";
+            responseXml['xml']['Content'] = "欢迎关注章伟的微信公众号！相关功能正在开发中，敬请期待！";
+        }
+    } else if (msgType === "text") {
+        responseXml['xml']['CreateTime'] = new Date().getTime();
+        responseXml['xml']['MsgType'] = msgType;
+        responseXml['xml']['Content'] = "已收到您的信息！";
+    } else if (msgType === "image") {
+        responseXml['xml']['CreateTime'] = new Date().getTime();
+        responseXml['xml']['MsgType'] = msgType;
+        responseXml['xml']['Image']={};
+        responseXml['xml']['Image']['MediaId'] = "5x2MiRQzcZockzXjFQRhzjl5fuybBtiyqxBYv2zraUG7TdyA3Wl1wHsI7uqxUs88";
+    }else if(msgType === "voice"){
+        responseXml['xml']['CreateTime'] = new Date().getTime();
+        responseXml['xml']['MsgType'] = msgType;
+        responseXml['xml']['Voice']={};
+        responseXml['xml']['Voice']['MediaId'] = "2u9cYIkNBNSO-lElNpahD89SlMgQxZhYoBAotL-Fa9DJdpVW3Y_3WZPZLV85ls2a";
+    }else if(msgType==="video"||msgType==="shortvideo"){
+        responseXml['xml']['CreateTime']=new Date().getTime();
+        responseXml['xml']['MsgType']="video";
+        responseXml['xml']['Video']={};
+        responseXml['xml']['Video']['MediaId']="kQtKyQoLWZouHxIs6LFpbRB24SBbccCsM3CqTDQHfS28p1wSC9wSz2yp-3Asyylq";
+    }else{
+        responseXml['xml']['CreateTime'] = new Date().getTime();
+        responseXml['xml']['MsgType'] = "text";
+        responseXml['xml']['Content'] = "已收到您的信息！";
+    }
+    console.log(responseXml);
+    var xml2js = require('xml2js');
+    var builder = new xml2js.Builder();
+    return builder.buildObject(responseXml);
+}
 
 server.listen(PORT);
 
