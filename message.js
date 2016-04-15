@@ -73,12 +73,12 @@ function getResponseXml(xml) {
         if (event = "subscribe") {
             responseXml['xml']['CreateTime'] = new Date().getTime();
             responseXml['xml']['MsgType'] = "text";
-            responseXml['xml']['Content'] = "欢迎关注章伟的微信公众号！相关功能正在开发中，敬请期待！";
+            responseXml['xml']['Content'] = "你好！欢迎关注GLxita，在本测试号中，你可以问我有关“天文、地理、化学、生物等等一切问题，我都不会回答的。”";
         }
     } else if (msgType === "text") {
         responseXml['xml']['CreateTime'] = new Date().getTime();
         responseXml['xml']['MsgType'] = msgType;
-        responseXml['xml']['Content'] = "已收到您的信息！";
+        responseXml['xml']['Content'] = "收到了你的信息，它是一段文本信息，别问我是什么，我并不知道";
     } else if (msgType === "image") {
         responseXml['xml']['CreateTime'] = new Date().getTime();
         responseXml['xml']['MsgType'] = msgType;
