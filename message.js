@@ -52,6 +52,7 @@ var server = http.createServer(function(request,response){
                 if (!err){
                     //我们将XML数据通过xml2js模块（npm install xml2js）解析成json格式
                     console.log(result.xml.ToUserName[0]);
+                    console.log(result.xml.MsgType[0]);
                     response.end('success');
                 }
             });
