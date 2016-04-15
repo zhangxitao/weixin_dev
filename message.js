@@ -83,17 +83,17 @@ function getResponseXml(xml) {
         responseXml['xml']['CreateTime'] = new Date().getTime();
         responseXml['xml']['MsgType'] = msgType;
         responseXml['xml']['Image']={};
-        responseXml['xml']['Image']['MediaId'] = "5x2MiRQzcZockzXjFQRhzjl5fuybBtiyqxBYv2zraUG7TdyA3Wl1wHsI7uqxUs88";
+        responseXml['xml']['Image']['MediaId'] = "PqjIyfIFKYr91xbLUTQMQiNOgsAmXSYQExAiem1krw5AkT7a14T8VyHYSlYuWjq_";
     }else if(msgType === "voice"){
         responseXml['xml']['CreateTime'] = new Date().getTime();
         responseXml['xml']['MsgType'] = msgType;
         responseXml['xml']['Voice']={};
-        responseXml['xml']['Voice']['MediaId'] = "2u9cYIkNBNSO-lElNpahD89SlMgQxZhYoBAotL-Fa9DJdpVW3Y_3WZPZLV85ls2a";
+        responseXml['xml']['Voice']['MediaId'] = "MHDe4-0yBkfbf7SLQ7RpWdAqmo_9xTmNWxJgl65q63UnGn7lfVV-MCBw5DO0t5Mu";
     }else if(msgType==="video"||msgType==="shortvideo"){
         responseXml['xml']['CreateTime']=new Date().getTime();
         responseXml['xml']['MsgType']="video";
         responseXml['xml']['Video']={};
-        responseXml['xml']['Video']['MediaId']="kQtKyQoLWZouHxIs6LFpbRB24SBbccCsM3CqTDQHfS28p1wSC9wSz2yp-3Asyylq";
+        responseXml['xml']['Video']['MediaId']="AUfSaQhQ28rBzLGR0ndWNAJTPHoGMsiAGZHu0tEBgQkI3Cd6iuU1NEUuy5-uMsAX";
     }else{
         responseXml['xml']['CreateTime'] = new Date().getTime();
         responseXml['xml']['MsgType'] = "text";
