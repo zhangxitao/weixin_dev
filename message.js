@@ -9,6 +9,9 @@ var http = require('http');
 var qs = require('qs');
 var TOKEN = 'xitao';
 
+var getUserInfo = require('./lib/user').getUserInfo;
+var wss = require('./lib/ws.js').wss;
+
 function  checkSignature(params, token){
     //1.将token、timestamp、nonce三个参数进行字典序排序
     //2.将三个参数字符串拼接成一个字符串进行sha1加密
@@ -61,6 +64,8 @@ var server = http.createServer(function(request,response){
     }
 });
 
+
+
 function getResponseXml(xml) {
     var msgType=xml['MsgType'][0];
     var to_username = xml['ToUserName'][0];
@@ -73,12 +78,12 @@ function getResponseXml(xml) {
         if (event = "subscribe") {
             responseXml['xml']['CreateTime'] = new Date().getTime();
             responseXml['xml']['MsgType'] = "text";
-            responseXml['xml']['Content'] = "你好！欢迎关注GLxita，在本测试号中，你可以问我有关“天文、地理、化学、生物等等一切问题，我都不会回答的。”";
+            responseXml['xml']['Content'] = "你好！欢迎关注xitao1012测试号！";
         }
     } else if (msgType === "text") {
         responseXml['xml']['CreateTime'] = new Date().getTime();
         responseXml['xml']['MsgType'] = msgType;
-        responseXml['xml']['Content'] = "收到了你的信息，它是一段文本信息，别问我是什么，我并不知道";
+        responseXml['xml']['Content'] = "你好，已经收到你的一段文本文字";
     } else if (msgType === "image") {
         responseXml['xml']['CreateTime'] = new Date().getTime();
         responseXml['xml']['MsgType'] = msgType;
