@@ -22,9 +22,9 @@
   function startWebSocket() {
     connstatus.innerHTML = "WebSocket connected";
     if ('WebSocket' in window)
-      ws = new WebSocket("ws://42.96.177.180:10001");
+      ws = new WebSocket("ws://120.27.126.67:10001");
     else if ('MozWebSocket' in window)
-      ws = new MozWebSocket("ws://42.96.177.180:10001");
+      ws = new MozWebSocket("ws://120.27.126.67:10001");
     else
       alert("not support");
     ws.onopen = function (evt){
