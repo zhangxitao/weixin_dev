@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Wx client</title>
+  <style>
+    li > img{
+      width: 32px;
+    }
+  </style>
+</head>
+<body onload="startWebSocket();">
+  <h1 id="status">dddd</h1>
+  <ul id="messages">
+    
+  </ul>
+</body>
+<script type="text/javascript">
+  var msglist = document.getElementById('messages');
+  var connstatus = document.getElementById("status");
+  var ws = null;
+  function startWebSocket() {
+    connstatus.innerHTML = "WebSocket connected";
+    if ('WebSocket' in window)
+      ws = new WebSocket("ws://42.96.177.180:10001");
+    else if ('MozWebSocket' in window)
+      ws = new MozWebSocket("ws://42.96.177.180:10001");
+    else
+      alert("not support");
+    ws.onopen = function (evt){
+      ws.send("connected");
+    }
+    ws.onmessage = function(evt) {
+      console.log(evt.data);
+      var msg = JSON.parse(evt.data);
+      var content = msg.xml.Content[0];
+      msg.user = msg.user || {};
+      var userName = msg.user.nickname;
+      var headimg = msg.user.headimgurl;
+
+      var oLi = document.createElement('li');
+      oLi.innerHTML = '<img src="'+headimg+'">' + userName + '说:' + content;
+      msglist.appendChild(oLi);
+    };
+    ws.onclose = function (evt){
+      connstatus.innerHTML="WebSocket disconnected";
+    };
+    ws.onerror = function (evt){
+      connstatus.innerHTML="WebSocket error";
+    }
+  }
+
+
+</script>
+</html>
