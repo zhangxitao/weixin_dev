@@ -58,6 +58,16 @@ var server = http.createServer(function(request,response){
                     //console.log(result.xml.MsgType[0]);
                     var xmlResponse = getResponseXml(result.xml);
                     response.end(xmlResponse);
+                    getUserInfo(result.xml.FromUserName[0])
+                        .then(function(userInfo){
+                            //获得用户信息，合并到消息中
+                            result.user = userInfo;
+                            console.log("Broadcast:")
+                            console.log(result);
+                            //将消息通过websocket广播
+                            wss.broadcast(result);
+
+                        });
                 }
             });
         });
